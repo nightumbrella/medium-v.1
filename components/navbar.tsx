@@ -16,6 +16,14 @@ const Navbar = () => {
     }
   };
 
+  const MakeNewStore = async () => {
+    try {
+      console.log("Make New Store");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <nav className="flex items-center justify-between py-2">
       <div className="flex items-center gap-3">
@@ -64,11 +72,11 @@ const Navbar = () => {
           </svg>
         </div>
         <div className="border rounded-full border-neutral-500">
-          <UserButton />
+          <UserButton afterSignOutUrl="/" />
         </div>
       </div>
     </nav>
   );
-};1
+};
 
 export default Navbar;
