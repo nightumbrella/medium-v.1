@@ -4,21 +4,24 @@ import Logo from "@/components/logo";
 import { Search, SquarePen } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { UserButton } from "@clerk/nextjs";
+import axios from "axios";
 
 const Navbar = () => {
   const router = useRouter();
-  const [SearchInput, setSearchInput] = useState<string>("");
+  const [searchInput, setSearchInput] = useState<string>("");
 
   // fn🦀
   const SearchFun = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      router.push(`/search?for=${SearchInput}`);
+      router.push(`/search?for=${searchInput}`);
     }
   };
 
   const MakeNewStore = async () => {
     try {
       console.log("Make New Store");
+      const response = await axios.post("/api/new-story");
+      router.push(`story/${response.data.id}`);
     } catch (error) {
       console.log(error);
     }
@@ -30,7 +33,7 @@ const Navbar = () => {
         <Logo />
         <div className="flex items-center bg-neutral-700 rounded-full px-2 text-neutral-400">
           <Search
-            onClick={() => router.push(`/search?for${SearchInput}`)}
+            onClick={() => router.push(`/search?for${searchInput}`)}
             size={20}
             className=""
           />
@@ -44,7 +47,10 @@ const Navbar = () => {
         </div>
       </div>
       <div className="flex items-center gap-4 text-white">
-        <section className="flex items-center gap-2 cursor-pointer">
+        <section
+          className="flex items-center gap-2 cursor-pointer"
+          onClick={MakeNewStore}
+        >
           <SquarePen size={25} strokeWidth={1} className="text-white" />
           <h1>Write</h1>
         </section>
